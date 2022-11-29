@@ -1,0 +1,16 @@
+<header>
+  <div id="header-left">
+    <a href="/">EMPLOYEE REVIEW SYSTEM</a>
+  </div>
+  <div id="header-right">
+    <ul>
+      <% if(!locals.USER){ %>
+      <li><a href="/users/sign-in">Log In</a></li>
+      <li><a href="/users/sign-up">Register</a></li>
+      <% }else{ %>
+      <li>Hi <%= locals.USER.name %>!</li>
+      <li><a href="/users/sign-out">Log Out</a></li>
+      <% } %>
+    </ul>
+  </div>
+</header>
