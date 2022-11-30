@@ -10,6 +10,11 @@
       type="text/css"
       href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="<%= assetPath('css/layout.css') %>"
+    />
     <%- style -%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -22,6 +27,26 @@
     <div id="layout-container">
       <%- include('_header'); -%><%- body -%><%- include('_footer'); -%>
     </div>
-    <%- script -%>
+    <% if(flash.success){ %>
+    <script>
+      new Noty({
+        text: '<%= flash.success %>',
+        layout: 'topRight',
+        theme: 'metroui',
+        type: 'success',
+        timeout: 3000
+      }).show();
+    </script>
+    <% } else if(flash.error){ %>
+    <script>
+      new Noty({
+        text: '<%= flash.error %>',
+        type: 'error',
+        layout: 'topRight',
+        timeout: 3000,
+        theme: 'metroui'
+      }).show();
+    </script>
+    <% } %> <%- script -%>
   </body>
 </html>
