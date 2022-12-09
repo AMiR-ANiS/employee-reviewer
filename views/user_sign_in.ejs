@@ -1,0 +1,27 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/authenticate.css') %>"
+/>
+
+<div id="authenticate-container">
+  <h2>User Sign In</h2>
+  <form action="/users/create-session" method="POST">
+    <label for="email">Email: </label> <br />
+    <input id="email" type="email" name="email" placeholder="Enter email" />
+    <br />
+    <br />
+    Password: <br />
+    <input type="password" name="password" placeholder="Type password" />
+    <br />
+    <br />
+    User type: <br />
+    <input id="admin" type="radio" name="user_type" value="admin" />
+    <label for="admin">Admin</label> <br />
+    <input id="employee" type="radio" name="user_type" value="employee" />
+    <label for="employee">Employee</label>
+    <br />
+    <br />
+    <input type="submit" value="Sign In" />
+  </form>
+</div>

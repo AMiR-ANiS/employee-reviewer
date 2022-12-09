@@ -1,0 +1,39 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/authenticate.css') %>"
+/>
+
+<div id="authenticate-container">
+  <h2>User Sign Up</h2>
+  <form action="/users/create-user" method="POST">
+    <label for="name">Name:</label> <br />
+    <input id="name" type="text" name="name" placeholder="Enter name" />
+    <br />
+    <br />
+    <label for="email">Email: </label> <br />
+    <input id="email" type="email" name="email" placeholder="Enter email" />
+    <br />
+    <br />
+    Password: <br />
+    <input type="password" name="password" placeholder="Type password" />
+    <br />
+    <br />
+    Confirm Password: <br />
+    <input
+      type="password"
+      name="confirm_password"
+      placeholder="Retype password"
+    />
+    <br />
+    <br />
+    User type: <br />
+    <input id="admin" type="radio" name="user_type" value="admin" />
+    <label for="admin">Admin</label> <br />
+    <input id="employee" type="radio" name="user_type" value="employee" />
+    <label for="employee">Employee</label>
+    <br />
+    <br />
+    <input type="submit" value="Sign Up" />
+  </form>
+</div>
