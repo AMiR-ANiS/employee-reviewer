@@ -14,6 +14,8 @@ const flash = require('connect-flash');
 const customMiddleWare = require('./config/middleware');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -58,6 +60,9 @@ app.use(
     })
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.setAuthentication);
 
 app.use(flash());
 app.use(customMiddleWare.setFlash);
