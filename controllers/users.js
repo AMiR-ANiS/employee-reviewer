@@ -1,15 +1,23 @@
 const User = require('../models/user');
 
 module.exports.signUp = (req, res) => {
-  return res.render('user_sign_up', {
-    title: 'Employee Reviewer | Sign Up'
-  });
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  } else {
+    return res.render('user_sign_up', {
+      title: 'Employee Reviewer | Sign Up'
+    });
+  }
 };
 
 module.exports.signIn = (req, res) => {
-  return res.render('user_sign_in', {
-    title: 'Employee Reviewer | Sign In'
-  });
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  } else {
+    return res.render('user_sign_in', {
+      title: 'Employee Reviewer | Sign In'
+    });
+  }
 };
 
 module.exports.createUser = async (req, res) => {
@@ -64,4 +72,19 @@ module.exports.createUser = async (req, res) => {
     console.log(err);
     return res.redirect('back');
   }
+};
+
+module.exports.createSession = (req, res) => {
+  req.flash('success', 'Log in successful!');
+  return res.redirect('/');
+};
+
+module.exports.destroySession = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.flash('success', 'Log out successful!');
+    return res.redirect('/');
+  });
 };
