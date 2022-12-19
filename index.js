@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const viewHelpers = require('./config/view-helpers');
 const sassMiddleWare = require('node-sass-middleware');
 const flash = require('connect-flash');
-const customMiddleWare = require('./config/middleware');
+const middlewares = require('./config/middleware');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
@@ -62,10 +62,10 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(passport.setAuthentication);
+app.use(middlewares.setUserAuthentication);
 
 app.use(flash());
-app.use(customMiddleWare.setFlash);
+app.use(middlewares.setFlash);
 
 app.use('/', require('./routes'));
 

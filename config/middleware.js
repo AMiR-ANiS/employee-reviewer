@@ -19,3 +19,18 @@ module.exports.checkSignInInput = (req, res, next) => {
   }
   next();
 };
+
+module.exports.checkUserAuthentication = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    return res.redirect('/users/sign-in');
+  }
+};
+
+module.exports.setUserAuthentication = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.locals.user = req.user;
+  }
+  next();
+};

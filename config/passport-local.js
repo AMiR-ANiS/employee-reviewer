@@ -41,19 +41,4 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-passport.checkAuthentication = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    return res.redirect('/users/sign-in');
-  }
-};
-
-passport.setAuthentication = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.locals.user = req.user;
-  }
-  next();
-};
-
 module.exports = passport;
