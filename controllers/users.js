@@ -69,7 +69,6 @@ module.exports.createUser = async (req, res) => {
     }
   } catch (err) {
     req.flash('error', 'Error in registering user!');
-    console.log(err);
     return res.redirect('back');
   }
 };

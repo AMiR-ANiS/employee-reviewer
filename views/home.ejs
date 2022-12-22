@@ -3,4 +3,38 @@
   type="text/css"
   href="<%= assetPath('css/home.css') %>"
 />
-<div id="home-container">home</div>
+<div id="home-container">
+  <% if(!locals.user){ %>
+  <h3>Employee Reviewer | Please Sign in/Register to proceed!</h3>
+  <% }else if(locals.user.type === 'admin'){ %>
+  <h3>Employee Reviewer | Admin View</h3>
+  <ul>
+    <a href="/admin/add-employee"><li class="add-employee">ADD EMPLOYEE</li></a>
+    <a href="/admin/remove-employee"
+      ><li class="remove-employee">REMOVE EMPLOYEE</li></a
+    >
+    <a href="/admin/update-employee"
+      ><li class="update-employee">UPDATE EMPLOYEE</li></a
+    >
+    <a href="/admin/view-employees"
+      ><li class="view-employee">VIEW EMPLOYEES</li></a
+    >
+    <a href="/admin/add-review"
+      ><li class="add-review">ADD PERFORMANCE REVIEW</li></a
+    >
+    <a href="/admin/update-review"
+      ><li class="update-review">UPDATE PERFORMANCE REVIEW</li></a
+    >
+    <a href="/admin/view-reviews"
+      ><li class="view-review">VIEW PERFORMANCE REVIEWS</li></a
+    >
+    <a href="/admin/assign-employee"
+      ><li class="assign-employee">
+        ASSIGN EMPLOYEE TO FEEDBACK OTHER EMPLOYEE
+      </li></a
+    >
+  </ul>
+  <% }else if(locals.user.type === 'employee'){ %>
+  <h3>Employee Reviewer | Employee View</h3>
+  <% } %>
+</div>

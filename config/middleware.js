@@ -24,6 +24,7 @@ module.exports.checkUserAuthentication = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   } else {
+    req.flash('error', 'Please Log in to continue!');
     return res.redirect('/users/sign-in');
   }
 };
@@ -33,4 +34,13 @@ module.exports.setUserAuthentication = (req, res, next) => {
     res.locals.user = req.user;
   }
   next();
+};
+
+module.exports.checkIfUserIsAdmin = (req, res, next) => {
+  if (req.user.type === 'admin') {
+    next();
+  } else {
+    req.flash('error', 'Forbidden route!');
+    return res.redirect('back');
+  }
 };

@@ -3,4 +3,109 @@
   padding: 10px;
   box-sizing: border-box;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#home-container h3 {
+  margin: 0;
+  box-shadow: 0px 0px 10px #00ff0d;
+  padding: 5px;
+}
+
+#home-container ul {
+  list-style-type: none;
+  margin: 10px;
+  padding: 0;
+}
+
+#home-container ul a {
+  margin: 10px;
+  display: block;
+  text-decoration: none;
+}
+
+#home-container ul a:link {
+  color: black;
+}
+
+#home-container ul a:visited {
+  color: black;
+}
+
+#home-container ul a:active {
+  color: black;
+}
+
+#home-container ul li {
+  padding: 5px 10px;
+  border: 1px solid black;
+  text-align: center;
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+
+#home-container ul .add-employee {
+  box-shadow: 4px 4px 4px #a1ff84;
+}
+
+#home-container ul .add-employee:hover {
+  background-color: #a1ff84;
+}
+
+#home-container ul .remove-employee {
+  box-shadow: 4px 4px 4px #ff8181;
+}
+
+#home-container ul .remove-employee:hover {
+  background-color: #ff8181;
+}
+
+#home-container ul .update-employee {
+  box-shadow: 4px 4px 4px #ff7fff;
+}
+
+#home-container ul .update-employee:hover {
+  background-color: #ff7fff;
+}
+
+#home-container ul .view-employee {
+  box-shadow: 4px 4px 4px #778cff;
+}
+
+#home-container ul .view-employee:hover {
+  background-color: #778cff;
+}
+
+#home-container ul .assign-employee {
+  box-shadow: 4px 4px 4px #80ffff;
+}
+
+#home-container ul .assign-employee:hover {
+  background-color: #80ffff;
+}
+
+#home-container ul .add-review {
+  box-shadow: 4px 4px 4px #a9ff81;
+}
+
+#home-container ul .add-review:hover {
+  background-color: #a9ff81;
+}
+
+#home-container ul .update-review {
+  box-shadow: 4px 4px 4px #ffb77c;
+}
+
+#home-container ul .update-review:hover {
+  background-color: #ffb77c;
+}
+
+#home-container ul .view-review {
+  box-shadow: 4px 4px 4px #f6ff7d;
+}
+
+#home-container ul .view-review:hover {
+  background-color: #f6ff7d;
 }
