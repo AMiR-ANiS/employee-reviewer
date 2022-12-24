@@ -1,12 +1,12 @@
 const User = require('../models/user');
 
-module.exports.addEmployee = (req, res) => {
+module.exports.addEmployeePage = (req, res) => {
   return res.render('add_employee', {
     title: 'Employee Reviewer | Add Employee'
   });
 };
 
-module.exports.createEmployee = async (req, res) => {
+module.exports.addEmployee = async (req, res) => {
   try {
     if (req.body.name.length === 0) {
       req.flash('error', 'Name cannot be empty!');
@@ -28,6 +28,11 @@ module.exports.createEmployee = async (req, res) => {
       return res.redirect('back');
     }
 
+    let emptype = 'employee';
+    if (req.body.admin === 'true') {
+      emptype = 'admin';
+    }
+
     let user = await User.findOne({
       email: req.body.email
     });
@@ -40,13 +45,44 @@ module.exports.createEmployee = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        type: 'employee'
+        type: emptype
       });
       req.flash('success', 'Employee added successfully!');
       return res.redirect('/');
     }
   } catch (err) {
     req.flash('error', 'Error while adding employee!');
+    return res.redirect('back');
+  }
+};
+
+module.exports.updateEmployeeList = async (req, res) => {
+  try {
+    let employees = await User.find({}).select({ password: 0 });
+
+    return res.render('update_employee_list', {
+      title: 'Employee Reviewer | Update Employee',
+      employees
+    });
+  } catch (err) {
+    req.flash('error', 'Error while displaying employee list');
+    return res.redirect('back');
+  }
+};
+
+module.exports.employeeList = async (req, res) => {
+  try {
+    let employees = await User.find({})
+      .select({ password: 0 })
+      .sort(`${req.query.sort}`);
+
+    return res.render('employee_list', {
+      title: 'Employee Reviewer | Employee List',
+      employees,
+      sortBy: req.query.sort
+    });
+  } catch (err) {
+    req.flash('error', 'Error while displaying employee list');
     return res.redirect('back');
   }
 };

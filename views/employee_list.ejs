@@ -1,0 +1,42 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/employee_list.css') %>"
+/>
+
+<div id="employee-list-container">
+  <div id="sort-by">
+    <form action="/admin/view-employees" method="get">
+      <label for="sort-order">Sort by: </label>
+      <select id="sort-order" name="sort">
+        <% if(sortBy === 'name'){%>
+        <option value="name" selected>name</option>
+        <option value="type">type</option>
+        <% } else { %>
+        <option value="name">name</option>
+        <option value="type" selected>type</option>
+        <% } %>
+      </select>
+      <input type="submit" value="sort" />
+    </form>
+  </div>
+  <div id="employee-table">
+    <table>
+      <caption>
+        Employee List
+      </caption>
+      <thead>
+        <tr>
+          <th>Sl. No.</th>
+          <th>Employee Name</th>
+          <th>Employee Email</th>
+          <th>Employee Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < employees.length; i++) { %> <%-
+        include('_employee', {employee: employees[i], n: i+1}) -%> <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

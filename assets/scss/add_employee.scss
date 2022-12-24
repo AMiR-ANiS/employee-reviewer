@@ -17,15 +17,16 @@
     input[type='password'] {
       width: 300px;
       border-radius: 20px;
-      padding: 5px 10px;
-      border: 1px solid black;
+      padding: 10px;
+      border: 1px solid rgb(17, 255, 56);
       box-sizing: border-box;
       background-color: rgb(231, 255, 242);
     }
 
     input[type='submit'] {
       width: 300px;
-      padding: 5px;
+      padding: 10px;
+      border-radius: 10px;
       border: 1px solid rgb(0, 0, 0);
       box-sizing: border-box;
       background-color: rgb(144, 255, 129);

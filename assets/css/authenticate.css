@@ -16,9 +16,9 @@
 #authenticate-container form input[type='email'],
 #authenticate-container form input[type='password'] {
   width: 300px;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 10px;
-  border: 1px dashed black;
+  border: 1px solid #3430ff;
   box-sizing: border-box;
   background-color: #e1ffff;
 }

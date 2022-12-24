@@ -1,0 +1,56 @@
+#employee-list-container {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: auto;
+
+  #sort-by {
+    text-align: right;
+    margin-right: 10px;
+
+    select {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px dashed black;
+      background-color: rgb(240, 240, 240);
+    }
+
+    input[type='submit'] {
+      background-color: rgb(222, 255, 206);
+      border-radius: 5px;
+      padding: 5px 10px;
+      border: 1px solid rgb(58, 255, 58);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(135, 255, 135);
+      }
+    }
+  }
+
+  #employee-table {
+    padding: 10px;
+    overflow: auto;
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid black;
+      padding: 10px;
+    }
+
+    tr {
+      &:nth-child(2n) {
+        background-color: rgb(231, 231, 231);
+      }
+
+      &:hover {
+        background-color: rgb(127, 225, 255);
+      }
+    }
+  }
+}

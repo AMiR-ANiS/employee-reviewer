@@ -1,0 +1,54 @@
+#employee-list-container {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: auto;
+}
+
+#employee-list-container #sort-by {
+  text-align: right;
+  margin-right: 10px;
+}
+
+#employee-list-container #sort-by select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed black;
+  background-color: #f0f0f0;
+}
+
+#employee-list-container #sort-by input[type='submit'] {
+  background-color: #deffce;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: 1px solid #3aff3a;
+  cursor: pointer;
+}
+
+#employee-list-container #sort-by input[type='submit']:hover {
+  background-color: #87ff87;
+}
+
+#employee-list-container #employee-table {
+  padding: 10px;
+  overflow: auto;
+}
+
+#employee-list-container #employee-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#employee-list-container #employee-table th,
+#employee-list-container #employee-table td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+#employee-list-container #employee-table tr:nth-child(2n) {
+  background-color: #e7e7e7;
+}
+
+#employee-list-container #employee-table tr:hover {
+  background-color: #7fe1ff;
+}

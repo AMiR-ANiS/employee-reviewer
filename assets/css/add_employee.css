@@ -17,15 +17,16 @@
 #add-employee-container form input[type='password'] {
   width: 300px;
   border-radius: 20px;
-  padding: 5px 10px;
-  border: 1px solid black;
+  padding: 10px;
+  border: 1px solid #11ff38;
   box-sizing: border-box;
   background-color: #e7fff2;
 }
 
 #add-employee-container form input[type='submit'] {
   width: 300px;
-  padding: 5px;
+  padding: 10px;
+  border-radius: 10px;
   border: 1px solid black;
   box-sizing: border-box;
   background-color: #90ff81;

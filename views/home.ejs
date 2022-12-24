@@ -9,26 +9,28 @@
   <% }else if(locals.user.type === 'admin'){ %>
   <h3>Employee Reviewer | Admin View</h3>
   <ul>
-    <a href="/admin/add-employee"><li class="add-employee">ADD EMPLOYEE</li></a>
-    <a href="/admin/remove-employee"
+    <a href="/admin/add-employee-page"
+      ><li class="add-employee">ADD EMPLOYEE</li></a
+    >
+    <a href="/admin/remove-employee-list"
       ><li class="remove-employee">REMOVE EMPLOYEE</li></a
     >
-    <a href="/admin/update-employee"
+    <a href="/admin/update-employee-list"
       ><li class="update-employee">UPDATE EMPLOYEE</li></a
     >
-    <a href="/admin/view-employees"
+    <a href="/admin/view-employees?sort=name"
       ><li class="view-employee">VIEW EMPLOYEES</li></a
     >
-    <a href="/admin/add-review"
+    <a href="/admin/add-review-list"
       ><li class="add-review">ADD PERFORMANCE REVIEW</li></a
     >
-    <a href="/admin/update-review"
+    <a href="/admin/update-review-list"
       ><li class="update-review">UPDATE PERFORMANCE REVIEW</li></a
     >
     <a href="/admin/view-reviews"
       ><li class="view-review">VIEW PERFORMANCE REVIEWS</li></a
     >
-    <a href="/admin/assign-employee"
+    <a href="/admin/assign-employee-list"
       ><li class="assign-employee">
         ASSIGN EMPLOYEE TO FEEDBACK OTHER EMPLOYEE
       </li></a

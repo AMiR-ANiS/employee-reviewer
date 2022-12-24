@@ -15,23 +15,26 @@
     <input id="email" type="email" name="email" placeholder="Enter email" />
     <br />
     <br />
-    Password: <br />
-    <input type="password" name="password" placeholder="Type password" />
-    <br />
-    <br />
-    Confirm Password: <br />
+    <label for="password">Password: </label> <br />
     <input
+      id="password"
+      type="password"
+      name="password"
+      placeholder="Type password"
+    />
+    <br />
+    <br />
+    <label for="confirm_password">Confirm Password: </label> <br />
+    <input
+      id="confirm_password"
       type="password"
       name="confirm_password"
       placeholder="Retype password"
     />
     <br />
     <br />
-    User type: <br />
-    <input id="admin" type="radio" name="user_type" value="admin" />
-    <label for="admin">Admin</label> <br />
-    <input id="employee" type="radio" name="user_type" value="employee" />
-    <label for="employee">Employee</label>
+    <input id="admin-check" type="checkbox" name="admin" value="true" />
+    <label for="admin-check">Make this account an admin account?</label>
     <br />
     <br />
     <input type="submit" value="Sign Up" />
