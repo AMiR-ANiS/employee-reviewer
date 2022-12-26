@@ -42,9 +42,9 @@ module.exports.createUser = async (req, res) => {
       return res.redirect('back');
     }
 
-    if (!req.body.user_type) {
-      req.flash('error', 'Please specify user type!');
-      return res.redirect('back');
+    let emptype = 'employee';
+    if (req.body.admin === 'true') {
+      emptype = 'admin';
     }
 
     let user = await User.findOne({
@@ -59,7 +59,7 @@ module.exports.createUser = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        type: req.body.user_type
+        type: emptype
       });
       req.flash(
         'success',
