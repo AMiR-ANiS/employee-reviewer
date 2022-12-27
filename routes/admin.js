@@ -69,4 +69,10 @@ router.post(
   adminController.addReview
 );
 
+router.get(
+  '/view-reviews',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.viewReviews
+);
+
 module.exports = router;

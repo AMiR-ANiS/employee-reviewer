@@ -288,3 +288,25 @@ module.exports.addReview = async (req, res) => {
     return res.redirect('back');
   }
 };
+
+module.exports.viewReviews = async (req, res) => {
+  try {
+    let reviews = await Review.find({})
+      .sort(`${req.query.sort}`)
+      .populate({
+        path: 'employee',
+        select: {
+          password: 0
+        }
+      });
+
+    return res.render('review_list', {
+      title: 'Employee Reviewer | View Reviews',
+      reviews,
+      sortBy: req.query.sort
+    });
+  } catch (err) {
+    req.flash('error', 'Error while rendering employee reviews!');
+    return res.redirect('back');
+  }
+};
