@@ -1,0 +1,59 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/add_review.css') %>"
+/>
+
+<div id="add-review-container">
+  <h3>Add Review for employee:</h3>
+  <em><%= employee.name %> (<%= employee.email %>)</em>
+  <br />
+  <form action="/admin/add-review/<%= employee._id %>" method="post">
+    <label for="review-text">Write a review: </label>
+    <br />
+    <textarea
+      id="review-text"
+      name="review_text"
+      placeholder="type..."
+      rows="5"
+    ></textarea>
+    <br />
+    <br />
+    Rate employee: <br />
+    <div class="rating">
+      <label>
+        <input type="radio" name="stars" value="1" />
+        <span class="icon">★</span>
+      </label>
+      <label>
+        <input type="radio" name="stars" value="2" />
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+      </label>
+      <label>
+        <input type="radio" name="stars" value="3" />
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+      </label>
+      <label>
+        <input type="radio" name="stars" value="4" />
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+      </label>
+      <label>
+        <input type="radio" name="stars" value="5" />
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+        <span class="icon">★</span>
+      </label>
+    </div>
+    <br />
+    <br />
+    <input type="submit" value="POST" />
+  </form>
+</div>

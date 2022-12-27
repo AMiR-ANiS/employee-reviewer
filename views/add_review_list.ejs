@@ -1,0 +1,45 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/employee_list.css') %>"
+/>
+
+<div id="employee-list-container">
+  <div id="sort-by">
+    <form action="/admin/add-review-list" method="get">
+      <label for="sort-order">Sort by: </label>
+      <select id="sort-order" name="sort">
+        <% if(sortBy === 'name'){%>
+        <option value="name" selected>name : asc</option>
+        <option value="-name">name : desc</option>
+        <% } else { %>
+        <option value="name">name : asc</option>
+        <option value="-name" selected>name : desc</option>
+        <% } %>
+      </select>
+      <input type="submit" value="sort" />
+    </form>
+  </div>
+  <div id="employee-table">
+    <table>
+      <caption>
+        <em
+          >*To add review for an employee, click the pen following an
+          employee.</em
+        >
+      </caption>
+      <thead>
+        <tr>
+          <th>Sl. No.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < employees.length; i++) { %> <%-
+        include('_add_review', {employee: employees[i], n: i+1}) -%> <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

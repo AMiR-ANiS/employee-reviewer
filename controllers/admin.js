@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Review = require('../models/review');
 
 module.exports.addEmployeePage = (req, res) => {
   return res.render('add_employee', {
@@ -155,7 +156,7 @@ module.exports.updateEmployee = async (req, res) => {
       }
 
       await user.save();
-      req.flash('success', 'user updated successfully!');
+      req.flash('success', 'employee updated successfully!');
       return res.redirect('/admin/update-employee-list?sort=name');
     } else {
       req.flash('error', '404! user not found!');
@@ -202,6 +203,88 @@ module.exports.removeEmployee = async (req, res) => {
     }
   } catch (err) {
     req.flash('error', 'Error while removing employee!');
+    return res.redirect('back');
+  }
+};
+
+module.exports.addReviewList = async (req, res) => {
+  try {
+    let employees = await User.find({
+      type: 'employee',
+      reviewed: false
+    })
+      .select({ password: 0 })
+      .sort(`${req.query.sort}`);
+
+    return res.render('add_review_list', {
+      title: 'Employee Reviewer | Add Reviews',
+      employees,
+      sortBy: req.query.sort
+    });
+  } catch (err) {
+    req.flash('error', 'Error while rendering employee list');
+    return res.redirect('back');
+  }
+};
+
+module.exports.addReviewPage = async (req, res) => {
+  try {
+    let employee = await User.findById(req.params.id).select({ password: 0 });
+
+    if (
+      employee &&
+      employee.type === 'employee' &&
+      employee.reviewed === false
+    ) {
+      return res.render('add_review', {
+        title: 'Employee Reviewer | Add Review',
+        employee
+      });
+    } else {
+      req.flash('error', '404! user not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash('error', 'Error while rendering add review page');
+    return res.redirect('back');
+  }
+};
+
+module.exports.addReview = async (req, res) => {
+  try {
+    let employee = await User.findById(req.params.id);
+
+    if (
+      employee &&
+      employee.type === 'employee' &&
+      employee.reviewed === false
+    ) {
+      if (req.body.review_text.length === 0) {
+        req.flash('error', 'Review text cannot be empty!');
+        return res.redirect('back');
+      }
+
+      if (!req.body.stars) {
+        req.flash('error', 'Please specify employee rating!');
+        return res.redirect('back');
+      }
+
+      let review = await Review.create({
+        text: req.body.review_text,
+        stars: req.body.stars,
+        employee: req.params.id
+      });
+
+      employee.reviewed = true;
+      await employee.save();
+      req.flash('success', 'employee reviewed successfully!');
+      return res.redirect('/admin/add-review-list?sort=name');
+    } else {
+      req.flash('error', '404! user not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash('error', 'Error while adding review for employee!');
     return res.redirect('back');
   }
 };

@@ -51,4 +51,22 @@ router.get(
   adminController.removeEmployee
 );
 
+router.get(
+  '/add-review-list',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.addReviewList
+);
+
+router.get(
+  '/add-review-page/:id',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.addReviewPage
+);
+
+router.post(
+  '/add-review/:id',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.addReview
+);
+
 module.exports = router;

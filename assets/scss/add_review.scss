@@ -1,0 +1,103 @@
+#add-review-container {
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+  }
+
+  form {
+    textarea {
+      padding: 5px;
+      border: 1px dotted black;
+      box-sizing: border-box;
+      width: 300px;
+    }
+
+    input[type='submit'] {
+      width: 300px;
+      padding: 5px;
+      border-radius: 10px;
+      border: 1px solid rgb(0, 0, 0);
+      box-sizing: border-box;
+      background-color: rgb(144, 255, 129);
+      cursor: pointer;
+      box-shadow: 2px 2px 2px black;
+
+      &:hover {
+        background-color: rgb(70, 255, 45);
+        box-shadow: 3px 3px 3px black;
+      }
+    }
+
+    .rating {
+      display: inline-block;
+      position: relative;
+      height: 30px;
+      line-height: 30px;
+      font-size: 30px;
+    }
+
+    .rating label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .rating label:last-child {
+      position: static;
+    }
+
+    .rating label:nth-child(1) {
+      z-index: 5;
+    }
+
+    .rating label:nth-child(2) {
+      z-index: 4;
+    }
+
+    .rating label:nth-child(3) {
+      z-index: 3;
+    }
+
+    .rating label:nth-child(4) {
+      z-index: 2;
+    }
+
+    .rating label:nth-child(5) {
+      z-index: 1;
+    }
+
+    .rating label input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+    .rating label .icon {
+      color: transparent;
+    }
+
+    .rating label:last-child .icon {
+      color: black;
+    }
+
+    .rating:not(:hover) label input:checked ~ .icon,
+    .rating:hover label:hover input ~ .icon {
+      color: rgb(0, 153, 255);
+    }
+
+    .rating label input:focus:not(:checked) ~ .icon:last-child {
+      color: black;
+      text-shadow: 0 0 5px rgb(0, 153, 255);
+    }
+  }
+}

@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['admin', 'employee'],
       required: true
+    },
+    reviewed: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   },
   {

@@ -1,0 +1,101 @@
+#add-review-container {
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#add-review-container h3 {
+  margin: 0;
+}
+
+#add-review-container form textarea {
+  padding: 5px;
+  border: 1px dotted black;
+  box-sizing: border-box;
+  width: 300px;
+}
+
+#add-review-container form input[type='submit'] {
+  width: 300px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  background-color: #90ff81;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px black;
+}
+
+#add-review-container form input[type='submit']:hover {
+  background-color: #46ff2d;
+  box-shadow: 3px 3px 3px black;
+}
+
+#add-review-container form .rating {
+  display: inline-block;
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  font-size: 30px;
+}
+
+#add-review-container form .rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+#add-review-container form .rating label:last-child {
+  position: static;
+}
+
+#add-review-container form .rating label:nth-child(1) {
+  z-index: 5;
+}
+
+#add-review-container form .rating label:nth-child(2) {
+  z-index: 4;
+}
+
+#add-review-container form .rating label:nth-child(3) {
+  z-index: 3;
+}
+
+#add-review-container form .rating label:nth-child(4) {
+  z-index: 2;
+}
+
+#add-review-container form .rating label:nth-child(5) {
+  z-index: 1;
+}
+
+#add-review-container form .rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+#add-review-container form .rating label .icon {
+  color: transparent;
+}
+
+#add-review-container form .rating label:last-child .icon {
+  color: black;
+}
+
+#add-review-container form .rating:not(:hover) label input:checked ~ .icon,
+#add-review-container form .rating:hover label:hover input ~ .icon {
+  color: #0099ff;
+}
+
+#add-review-container form .rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: black;
+  text-shadow: 0 0 5px #0099ff;
+}
