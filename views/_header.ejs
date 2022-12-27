@@ -12,12 +12,20 @@
     <ul>
       <% if(locals.user){ %>
       <li style="font-size: 1.2rem">
-        <i class="fa-regular fa-circle-user"></i> <%= locals.user.name %>
+        <a href="/users/update-page">
+          <i class="fa-regular fa-circle-user"></i> <%= locals.user.name %>
+        </a>
       </li>
-      <li><a href="/users/sign-out">Log Out</a></li>
+      <li>
+        <a href="/users/sign-out">Log Out</a>
+      </li>
       <% }else{ %>
-      <li><a href="/users/sign-in">Log In</a></li>
-      <li><a href="/users/sign-up">Register</a></li>
+      <li>
+        <a href="/users/sign-in">Log In</a>
+      </li>
+      <li>
+        <a href="/users/sign-up">Register</a>
+      </li>
       <% } %>
     </ul>
   </div>

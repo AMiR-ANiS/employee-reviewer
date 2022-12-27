@@ -25,4 +25,16 @@ router.get(
   usersController.destroySession
 );
 
+router.get(
+  '/update-page',
+  middlewares.checkUserAuthentication,
+  usersController.updatePage
+);
+
+router.post(
+  '/update',
+  middlewares.checkUserAuthentication,
+  usersController.update
+);
+
 module.exports = router;

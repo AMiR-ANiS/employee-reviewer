@@ -74,7 +74,7 @@ module.exports.createUser = async (req, res) => {
 };
 
 module.exports.createSession = (req, res) => {
-  req.flash('success', 'Log in successful!');
+  req.flash('success', 'Welcome!');
   return res.redirect('/');
 };
 
@@ -86,4 +86,52 @@ module.exports.destroySession = (req, res, next) => {
     req.flash('success', 'Log out successful!');
     return res.redirect('/');
   });
+};
+
+module.exports.updatePage = async (req, res) => {
+  try {
+    let user = await User.findById(req.user.id).select({ password: 0 });
+
+    return res.render('update_profile', {
+      title: 'Employee Reviewer | Update Profile',
+      user
+    });
+  } catch (err) {
+    req.flash('error', 'Error while rendering update page');
+    return res.redirect('back');
+  }
+};
+
+module.exports.update = async (req, res) => {
+  try {
+    let user = await User.findById(req.user.id);
+
+    if (req.body.name.length === 0) {
+      req.flash('error', 'Name cannot be empty!');
+      return res.redirect('back');
+    }
+
+    let passwordChanged = false;
+    if (req.body.password.length !== 0) {
+      passwordChanged = true;
+    }
+
+    if (req.body.password !== req.body.confirm_password) {
+      req.flash('error', 'Password and confirm password should match!');
+      return res.redirect('back');
+    }
+
+    user.name = req.body.name;
+
+    if (passwordChanged) {
+      user.password = req.body.password;
+    }
+
+    await user.save();
+    req.flash('success', 'Profile updated successfully!');
+    return res.redirect('/');
+  } catch (err) {
+    req.flash('error', 'Error while updating profile!');
+    return res.redirect('back');
+  }
 };

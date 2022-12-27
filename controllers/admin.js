@@ -58,7 +58,7 @@ module.exports.addEmployee = async (req, res) => {
 
 module.exports.updateEmployeeList = async (req, res) => {
   try {
-    let employees = await User.find({})
+    let employees = await User.find({ _id: { $ne: req.user.id } })
       .select({ password: 0 })
       .sort(`${req.query.sort}`);
 
@@ -75,7 +75,7 @@ module.exports.updateEmployeeList = async (req, res) => {
 
 module.exports.employeeList = async (req, res) => {
   try {
-    let employees = await User.find({})
+    let employees = await User.find({ _id: { $ne: req.user.id } })
       .select({ password: 0 })
       .sort(`${req.query.sort}`);
 
@@ -92,6 +92,13 @@ module.exports.employeeList = async (req, res) => {
 
 module.exports.updatePage = async (req, res) => {
   try {
+    if (req.params.id === req.user.id) {
+      req.flash(
+        'error',
+        'To update your profile, click your username at the top'
+      );
+      return res.redirect('back');
+    }
     let employee = await User.findById(req.params.id).select({ password: 0 });
 
     if (employee) {
@@ -111,6 +118,14 @@ module.exports.updatePage = async (req, res) => {
 
 module.exports.updateEmployee = async (req, res) => {
   try {
+    if (req.params.id === req.user.id) {
+      req.flash(
+        'error',
+        'To update your profile, click your username at the top'
+      );
+      return res.redirect('back');
+    }
+
     let user = await User.findById(req.params.id);
     if (user) {
       if (req.body.name.length === 0) {
@@ -128,7 +143,7 @@ module.exports.updateEmployee = async (req, res) => {
         return res.redirect('back');
       }
 
-      let emptype = 'employee';
+      let emptype = user.type;
       if (req.body.admin === 'true') {
         emptype = 'admin';
       }
@@ -141,7 +156,7 @@ module.exports.updateEmployee = async (req, res) => {
 
       await user.save();
       req.flash('success', 'user updated successfully!');
-      return res.redirect('/admin/update-employee-list');
+      return res.redirect('/admin/update-employee-list?sort=name');
     } else {
       req.flash('error', '404! user not found!');
       return res.redirect('back');

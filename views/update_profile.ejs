@@ -5,14 +5,14 @@
 />
 
 <div id="update-employee-container">
-  <h3>Update Employee</h3>
-  <form action="/admin/update-employee/<%= employee._id %>" method="post">
+  <h3>Update Profile</h3>
+  <form action="/users/update" method="post">
     <label for="name">Name:</label> <br />
     <input
       id="name"
       type="text"
       name="name"
-      value="<%= employee.name %>"
+      value="<%= user.name %>"
       placeholder="Enter name"
     />
     <br />
@@ -22,7 +22,7 @@
       id="email"
       type="email"
       name="email"
-      value="<%= employee.email %>"
+      value="<%= user.email %>"
       placeholder="Enter email"
       disabled
     />
@@ -51,12 +51,6 @@
     />
     <br />
     <br />
-    <% if(employee.type === 'employee'){ %>
-    <input id="admin-check" type="checkbox" name="admin" value="true" />
-    <label for="admin-check">Make this employee an admin</label>
-    <br />
-    <br />
-    <% } %>
     <input type="submit" value="UPDATE" />
   </form>
 </div>
