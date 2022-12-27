@@ -1,0 +1,64 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/update_employee.css') %>"
+/>
+
+<div id="update-employee-container">
+  <h3>Update Employee</h3>
+  <form action="/admin/update-employee/<%= employee._id %>" method="POST">
+    <label for="name">Name:</label> <br />
+    <input
+      id="name"
+      type="text"
+      name="name"
+      value="<%= employee.name %>"
+      placeholder="Enter name"
+    />
+    <br />
+    <br />
+    <label for="email">Email:</label> <br />
+    <input
+      id="email"
+      type="email"
+      name="email"
+      value="<%= employee.email %>"
+      placeholder="Enter email"
+      disabled
+    />
+    <br />
+    <br />
+
+    <label for="password">Password:</label> <br />
+    <input
+      id="password"
+      type="password"
+      name="password"
+      placeholder="Type password"
+    />
+    <br />
+    <label for="password"
+      ><em>*leave password field blank if it is not to be updated.</em></label
+    >
+    <br />
+    <br />
+    <label for="confirm_password">Confirm Password: </label> <br />
+    <input
+      id="confirm_password"
+      type="password"
+      name="confirm_password"
+      placeholder="Retype password"
+    />
+    <br />
+    <br />
+    <% if(employee.type === 'employee'){ %>
+    <input id="admin-check" type="checkbox" name="admin" value="true" />
+    <label for="admin-check">Make this employee an admin</label>
+    <br />
+    <br />
+    <% } else { %>
+    <input type="hidden" name="admin" value="true" />
+    <% } %>
+    <input type="submit" value="UPDATE" />
+  </form>
+</div>

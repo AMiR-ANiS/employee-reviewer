@@ -1,0 +1,40 @@
+#update-employee-container {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#update-employee-container h3 {
+  margin: 0;
+}
+
+#update-employee-container form input[type='text'],
+#update-employee-container form input[type='email'],
+#update-employee-container form input[type='password'] {
+  width: 350px;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid #11ff38;
+  box-sizing: border-box;
+  background-color: #e7fff2;
+}
+
+#update-employee-container form input[type='submit'] {
+  width: 350px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  background-color: #90ff81;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px black;
+}
+
+#update-employee-container form input[type='submit']:hover {
+  background-color: #46ff2d;
+  box-shadow: 3px 3px 3px black;
+}

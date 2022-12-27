@@ -52,5 +52,25 @@
         background-color: rgb(127, 225, 255);
       }
     }
+
+    a {
+      text-decoration: none;
+
+      &:link {
+        color: blue;
+      }
+
+      &:visited {
+        color: blue;
+      }
+
+      &:hover {
+        color: red;
+      }
+    }
   }
+}
+
+.center {
+  text-align: center;
 }

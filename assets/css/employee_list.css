@@ -52,3 +52,23 @@
 #employee-list-container #employee-table tr:hover {
   background-color: #7fe1ff;
 }
+
+#employee-list-container #employee-table a {
+  text-decoration: none;
+}
+
+#employee-list-container #employee-table a:link {
+  color: blue;
+}
+
+#employee-list-container #employee-table a:visited {
+  color: blue;
+}
+
+#employee-list-container #employee-table a:hover {
+  color: red;
+}
+
+.center {
+  text-align: center;
+}

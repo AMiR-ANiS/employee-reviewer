@@ -11,7 +11,9 @@
   <div id="header-right">
     <ul>
       <% if(locals.user){ %>
-      <li>Hi <%= locals.user.name %>!</li>
+      <li style="font-size: 1.2rem">
+        <i class="fa-regular fa-circle-user"></i> <%= locals.user.name %>
+      </li>
       <li><a href="/users/sign-out">Log Out</a></li>
       <% }else{ %>
       <li><a href="/users/sign-in">Log In</a></li>
