@@ -68,5 +68,19 @@
         color: red;
       }
     }
+
+    a.remove-icon {
+      &:link {
+        color: red;
+      }
+
+      &:visited {
+        color: red;
+      }
+
+      &:hover {
+        color: black;
+      }
+    }
   }
 }

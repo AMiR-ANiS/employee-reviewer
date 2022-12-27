@@ -106,6 +106,12 @@ module.exports.update = async (req, res) => {
   try {
     let user = await User.findById(req.user.id);
 
+    if (req.body.delete === 'true') {
+      await user.remove();
+      req.flash('success', 'account deleted successfully!');
+      return res.redirect('/');
+    }
+
     if (req.body.name.length === 0) {
       req.flash('error', 'Name cannot be empty!');
       return res.redirect('back');

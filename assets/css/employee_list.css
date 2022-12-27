@@ -68,3 +68,15 @@
 #employee-list-container #employee-table a:hover {
   color: red;
 }
+
+#employee-list-container #employee-table a.remove-icon:link {
+  color: red;
+}
+
+#employee-list-container #employee-table a.remove-icon:visited {
+  color: red;
+}
+
+#employee-list-container #employee-table a.remove-icon:hover {
+  color: black;
+}

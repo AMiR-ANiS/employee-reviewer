@@ -39,4 +39,16 @@ router.post(
   adminController.updateEmployee
 );
 
+router.get(
+  '/remove-employee-list',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.removeEmployeeList
+);
+
+router.get(
+  '/remove-employee/:id',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.removeEmployee
+);
+
 module.exports = router;

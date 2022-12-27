@@ -1,0 +1,58 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/employee_list.css') %>"
+/>
+
+<div id="employee-list-container">
+  <div id="sort-by">
+    <form action="/admin/remove-employee-list" method="get">
+      <label for="sort-order">Sort by: </label>
+      <select id="sort-order" name="sort">
+        <% if(sortBy === 'name'){%>
+        <option value="name" selected>name : asc</option>
+        <option value="-name">name : desc</option>
+        <option value="type">type : asc</option>
+        <option value="-type">type : desc</option>
+        <% } else if(sortBy === '-name') { %>
+        <option value="name">name : asc</option>
+        <option value="-name" selected>name : desc</option>
+        <option value="type">type : asc</option>
+        <option value="-type">type : desc</option>
+        <% } else if(sortBy === 'type') { %>
+        <option value="name">name : asc</option>
+        <option value="-name">name : desc</option>
+        <option value="type" selected>type : asc</option>
+        <option value="-type">type : desc</option>
+        <% } else { %>
+        <option value="name">name : asc</option>
+        <option value="-name">name : desc</option>
+        <option value="type">type : asc</option>
+        <option value="-type" selected>type : desc</option>
+        <% } %>
+      </select>
+      <input type="submit" value="sort" />
+    </form>
+  </div>
+  <div id="employee-table">
+    <table>
+      <caption>
+        <em>*To delete, click the delete button of a user.</em>
+      </caption>
+      <thead>
+        <tr>
+          <th>Sl. No.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Type</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < employees.length; i++) { %> <%-
+        include('_remove_employee', {employee: employees[i], n: i+1}) -%> <% }
+        %>
+      </tbody>
+    </table>
+  </div>
+</div>

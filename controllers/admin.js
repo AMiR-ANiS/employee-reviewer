@@ -166,3 +166,42 @@ module.exports.updateEmployee = async (req, res) => {
     return res.redirect('back');
   }
 };
+
+module.exports.removeEmployeeList = async (req, res) => {
+  try {
+    let employees = await User.find({ _id: { $ne: req.user.id } })
+      .select({ password: 0 })
+      .sort(`${req.query.sort}`);
+
+    return res.render('remove_employee_list', {
+      title: 'Employee Reviewer | Remove Employees',
+      employees,
+      sortBy: req.query.sort
+    });
+  } catch (err) {
+    req.flash('error', 'Error while rendering employee list');
+    return res.redirect('back');
+  }
+};
+
+module.exports.removeEmployee = async (req, res) => {
+  try {
+    if (req.params.id === req.user.id) {
+      req.flash('error', 'To delete your account, go to your profile page!');
+      return res.redirect('back');
+    }
+
+    let user = await User.findById(req.params.id);
+    if (user) {
+      await user.remove();
+      req.flash('success', 'employee removed successfully!');
+      return res.redirect('/admin/remove-employee-list?sort=name');
+    } else {
+      req.flash('error', '404! user not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash('error', 'Error while removing employee!');
+    return res.redirect('back');
+  }
+};
