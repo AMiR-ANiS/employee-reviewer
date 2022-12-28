@@ -194,6 +194,12 @@ module.exports.removeEmployee = async (req, res) => {
 
     let user = await User.findById(req.params.id);
     if (user) {
+      if (user.reviewed) {
+        await Review.deleteOne({
+          employee: user.id
+        });
+      }
+
       await user.remove();
       req.flash('success', 'employee removed successfully!');
       return res.redirect('/admin/remove-employee-list?sort=name');
@@ -307,6 +313,85 @@ module.exports.viewReviews = async (req, res) => {
     });
   } catch (err) {
     req.flash('error', 'Error while rendering employee reviews!');
+    return res.redirect('back');
+  }
+};
+
+module.exports.updateReviewList = async (req, res) => {
+  try {
+    let reviews = await Review.find({})
+      .sort(`${req.query.sort}`)
+      .populate({
+        path: 'employee',
+        select: {
+          password: 0
+        }
+      });
+
+    return res.render('update_review_list', {
+      title: 'Employee Reviewer | Update Reviews',
+      reviews,
+      sortBy: req.query.sort
+    });
+  } catch (err) {
+    req.flash('error', 'Error while rendering review list');
+    return res.redirect('back');
+  }
+};
+
+module.exports.updateReviewPage = async (req, res) => {
+  try {
+    let review = await Review.findById(req.params.id).populate({
+      path: 'employee',
+      select: {
+        password: 0
+      }
+    });
+
+    if (review) {
+      return res.render('update_review', {
+        title: 'Employee Reviewer | Update Review',
+        review,
+        employee: review.employee
+      });
+    } else {
+      req.flash('error', '404! review not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash('error', 'Error while rendering update review page');
+    return res.redirect('back');
+  }
+};
+
+module.exports.updateReview = async (req, res) => {
+  try {
+    let review = await Review.findById(req.params.id);
+
+    if (review) {
+      if (req.body.review_text.length === 0) {
+        req.flash('error', 'Review text cannot be empty!');
+        return res.redirect('back');
+      }
+
+      if (!req.body.stars) {
+        req.flash('error', 'Please specify employee rating!');
+        return res.redirect('back');
+      }
+
+      review.text = req.body.review_text;
+      review.stars = req.body.stars;
+
+      await review.save();
+
+      req.flash('success', 'review updated successfully!');
+      return res.redirect('/admin/update-review-list?sort=-stars');
+    } else {
+      req.flash('error', '404! review not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash('error', 'Error while updating review for employee!');
     return res.redirect('back');
   }
 };

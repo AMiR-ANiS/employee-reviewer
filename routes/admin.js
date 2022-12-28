@@ -75,4 +75,22 @@ router.get(
   adminController.viewReviews
 );
 
+router.get(
+  '/update-review-list',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.updateReviewList
+);
+
+router.get(
+  '/update-review-page/:id',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.updateReviewPage
+);
+
+router.post(
+  '/update-review/:id',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.updateReview
+);
+
 module.exports = router;
