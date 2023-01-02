@@ -1,0 +1,48 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/employee_list.css') %>"
+/>
+
+<div id="employee-list-container">
+  <div id="sort-by">
+    <form action="/admin/assign-employee-list" method="get">
+      <label for="sort-order">Sort by: </label>
+      <select id="sort-order" name="sort">
+        <% if(sortBy === 'stars') {%>
+        <option value="stars" selected>stars : asc</option>
+        <option value="-stars">stars : desc</option>
+        <% } else { %>
+        <option value="stars">stars : asc</option>
+        <option value="-stars" selected>stars : desc</option>
+        <% } %>
+      </select>
+      <input type="submit" value="sort" />
+    </form>
+  </div>
+  <div id="employee-table">
+    <table>
+      <caption>
+        <em>
+          *To assign employees to participate in an employee's performance
+          review, click the users icon next to a review.
+        </em>
+      </caption>
+      <thead>
+        <tr>
+          <th>Sl. No.</th>
+          <th>Rating</th>
+          <th>Review</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < reviews.length; i++) { %> <%-
+        include('_assign_employee', {review: reviews[i], employee:
+        reviews[i].employee, n: i+1}) -%> <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

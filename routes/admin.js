@@ -93,4 +93,22 @@ router.post(
   adminController.updateReview
 );
 
+router.get(
+  '/assign-employee-list',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.assignEmployeeList
+);
+
+router.get(
+  '/assign-employee-page',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.assignEmployeePage
+);
+
+router.post(
+  '/assign-employees/:id',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.assignEmployees
+);
+
 module.exports = router;

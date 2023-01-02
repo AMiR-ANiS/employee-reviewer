@@ -1,0 +1,52 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/employee_list.css') %>"
+/>
+
+<div id="employee-list-container">
+  <div id="sort-by">
+    <form action="/admin/assign-employee-page" method="get">
+      <label for="sort-order">Sort by: </label>
+      <select id="sort-order" name="sort">
+        <% if(sortBy === 'name'){%>
+        <option value="name" selected>name : asc</option>
+        <option value="-name">name : desc</option>
+        <% } else { %>
+        <option value="name">name : asc</option>
+        <option value="-name" selected>name : desc</option>
+        <% } %>
+      </select>
+      <input type="hidden" name="id" value="<%= review._id %>" />
+      <input type="submit" value="sort" />
+    </form>
+  </div>
+  <form
+    id="assign-employee-form"
+    action="/admin/assign-employees/<%= review._id %>"
+    method="post"
+  >
+    <div class="center"><input type="submit" value="ASSIGN" /></div>
+    <div id="employee-table">
+      <table>
+        <caption>
+          <em>*Select the employees to assign for feedback</em>
+        </caption>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < employees.length; i++) { %> <%-
+          include('_assign_employee_2', {employee: employees[i], assigned:
+          review.employeesAssigned, i:i}) -%> <% } %>
+        </tbody>
+      </table>
+    </div>
+    <input type="hidden" name="length" value="<%= employees.length %>" />
+    <div class="center"><input type="submit" value="ASSIGN" /></div>
+  </form>
+</div>

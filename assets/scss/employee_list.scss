@@ -83,4 +83,26 @@
       }
     }
   }
+
+  #assign-employee-form {
+    .center {
+      text-align: center;
+    }
+
+    input[type='submit'] {
+      width: 400px;
+      box-sizing: border-box;
+      padding: 5px;
+      border: 1px solid black;
+      border-radius: 30px;
+      box-shadow: 2px 2px 2px black;
+      margin: 10px 0px;
+      background-color: rgb(132, 255, 132);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(61, 255, 61);
+      }
+    }
+  }
 }

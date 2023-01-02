@@ -395,3 +395,112 @@ module.exports.updateReview = async (req, res) => {
     return res.redirect('back');
   }
 };
+
+module.exports.assignEmployeeList = async (req, res) => {
+  try {
+    let reviews = await Review.find({})
+      .sort(`${req.query.sort}`)
+      .populate({
+        path: 'employee',
+        select: {
+          password: 0
+        }
+      });
+
+    return res.render('assign_employee_list', {
+      title: 'Employee Reviewer | Assign Employees for feedback',
+      reviews,
+      sortBy: req.query.sort
+    });
+  } catch (err) {
+    req.flash('error', 'Error while rendering review list');
+    return res.redirect('back');
+  }
+};
+
+module.exports.assignEmployeePage = async (req, res) => {
+  try {
+    let review = await Review.findById(req.query.id).populate({
+      path: 'employee',
+      select: {
+        password: 0
+      }
+    });
+
+    if (review) {
+      let employees = await User.find({
+        type: 'employee'
+      })
+        .select({ password: 0 })
+        .sort(`${req.query.sort}`);
+
+      return res.render('assign_employee', {
+        title: 'Employee Reviewer | Assign Employees',
+        review,
+        employees,
+        sortBy: req.query.sort,
+        employee: review.employee
+      });
+    } else {
+      req.flash('error', '404! review not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash(
+      'error',
+      'Error while rendering assign employees for review page'
+    );
+    return res.redirect('back');
+  }
+};
+
+module.exports.assignEmployees = async (req, res) => {
+  try {
+    let review = await Review.findById(req.params.id);
+
+    if (review) {
+      for (let i = 0; i < req.body.length; i++) {
+        if (req.body[i]) {
+          let employee = await User.findById(req.body[i]);
+          if (!employee || employee.type !== 'employee') {
+            req.flash('error', 'invalid operation!');
+            return res.redirect('back');
+          }
+        }
+      }
+
+      let existingAssignedEmployeeIDs = review.employeesAssigned.map(
+        (id) => id
+      );
+
+      existingAssignedEmployeeIDs.forEach(async (id) => {
+        review.employeesAssigned.pull(id);
+        let employee = await User.findById(id);
+        employee.reviewsToFeedback.pull(review._id);
+
+        await employee.save();
+      });
+
+      for (let i = 0; i < req.body.length; i++) {
+        if (req.body[i]) {
+          let employee = await User.findById(req.body[i]);
+          review.employeesAssigned.push(req.body[i]);
+          employee.reviewsToFeedback.push(review._id);
+
+          await employee.save();
+        }
+      }
+
+      await review.save();
+
+      req.flash('success', 'employees assigned successfully!');
+      return res.redirect('/admin/assign-employee-list?sort=-stars');
+    } else {
+      req.flash('error', '404! review not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash('error', 'Error while assigning employees for feedback!');
+    return res.redirect('back');
+  }
+};
