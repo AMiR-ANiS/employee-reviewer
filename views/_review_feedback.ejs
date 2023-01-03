@@ -1,0 +1,14 @@
+<tr>
+  <td style="text-align: center"><%= n %></td>
+  <td style="text-align: center">
+    <% for(let j = 0; j < review.stars; j++){ %> ★ <% } %>
+  </td>
+  <td><%= review.text %></td>
+  <td><%= employee.name %></td>
+  <td><%= employee.email %></td>
+  <td style="text-align: center">
+    <a href="/employee/review-feedback-page/<%= review._id %>">
+      <i class="fa-regular fa-comment-dots"></i>
+    </a>
+  </td>
+</tr>

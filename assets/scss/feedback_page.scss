@@ -1,0 +1,42 @@
+#review-feedback-container {
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+  }
+
+  textarea {
+    padding: 5px;
+    border: 1px dotted black;
+    box-sizing: border-box;
+    width: 300px;
+  }
+
+  .icon {
+    color: rgb(0, 60, 255);
+  }
+
+  form {
+    input[type='submit'] {
+      width: 300px;
+      padding: 5px;
+      border-radius: 10px;
+      border: 1px solid rgb(0, 0, 0);
+      box-sizing: border-box;
+      background-color: rgb(144, 255, 129);
+      cursor: pointer;
+      box-shadow: 2px 2px 2px black;
+
+      &:hover {
+        background-color: rgb(70, 255, 45);
+        box-shadow: 3px 3px 3px black;
+      }
+    }
+  }
+}

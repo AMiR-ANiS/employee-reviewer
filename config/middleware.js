@@ -38,9 +38,18 @@ module.exports.setUserAuthentication = (req, res, next) => {
 
 module.exports.checkIfUserIsAdmin = (req, res, next) => {
   if (req.user.type === 'admin') {
-    next();
+    return next();
   } else {
-    req.flash('error', 'Forbidden route!');
+    req.flash('error', 'Invalid route!');
+    return res.redirect('back');
+  }
+};
+
+module.exports.checkIfUserIsEmployee = (req, res, next) => {
+  if (req.user.type === 'employee') {
+    return next();
+  } else {
+    req.flash('error', 'Invalid route!');
     return res.redirect('back');
   }
 };

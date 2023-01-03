@@ -38,5 +38,10 @@
   </ul>
   <% }else if(locals.user.type === 'employee'){ %>
   <h3>Employee Reviewer | Employee View</h3>
+  <ul>
+    <a href="/employee/view-reviews?sort=-stars">
+      <li class="view-review">VIEW PERFORMANCE REVIEWS REQUIRING FEEDBACK</li>
+    </a>
+  </ul>
   <% } %>
 </div>

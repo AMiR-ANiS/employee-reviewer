@@ -1,0 +1,31 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/feedback_page.css') %>"
+/>
+
+<div id="review-feedback-container">
+  <h3>Submit feedback for the review:</h3>
+  <textarea rows="5" disabled><%= review.text %></textarea>
+  <div>
+    Rating: <% for(let j = 0; j < review.stars; j++){ %>
+    <span class="icon">★</span> <% } %>
+  </div>
+  <br />
+  of: <em><%= employee.name %> (<%= employee.email %>)</em>
+  <br />
+  <form action="/employee/feedback-review/<%= review._id %>" method="post">
+    <label for="feedback-text">Write feedback: </label>
+    <br />
+    <textarea
+      id="feedback-text"
+      name="feedback_text"
+      placeholder="type..."
+      rows="5"
+    ></textarea>
+    <br />
+    <br />
+
+    <input type="submit" value="SUBMIT" />
+  </form>
+</div>

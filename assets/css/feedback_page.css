@@ -1,0 +1,40 @@
+#review-feedback-container {
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#review-feedback-container h3 {
+  margin: 0;
+}
+
+#review-feedback-container textarea {
+  padding: 5px;
+  border: 1px dotted black;
+  box-sizing: border-box;
+  width: 300px;
+}
+
+#review-feedback-container .icon {
+  color: #003cff;
+}
+
+#review-feedback-container form input[type='submit'] {
+  width: 300px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  background-color: #90ff81;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px black;
+}
+
+#review-feedback-container form input[type='submit']:hover {
+  background-color: #46ff2d;
+  box-shadow: 3px 3px 3px black;
+}
