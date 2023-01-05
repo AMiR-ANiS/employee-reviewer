@@ -4,7 +4,7 @@ module.exports.setFlash = (req, res, next) => {
     error: req.flash('error')[0]
   };
 
-  next();
+  return next();
 };
 
 module.exports.checkSignInInput = (req, res, next) => {
@@ -17,7 +17,7 @@ module.exports.checkSignInInput = (req, res, next) => {
     req.flash('error', 'Password cannot be empty!');
     return res.redirect('back');
   }
-  next();
+  return next();
 };
 
 module.exports.checkUserAuthentication = (req, res, next) => {
@@ -33,7 +33,7 @@ module.exports.setUserAuthentication = (req, res, next) => {
   if (req.isAuthenticated()) {
     res.locals.user = req.user;
   }
-  next();
+  return next();
 };
 
 module.exports.checkIfUserIsAdmin = (req, res, next) => {

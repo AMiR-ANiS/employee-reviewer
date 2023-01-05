@@ -16,6 +16,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local');
+const logger = require('morgan');
+const loggerConfig = require('./config/morgan');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -66,6 +68,8 @@ app.use(middlewares.setUserAuthentication);
 
 app.use(flash());
 app.use(middlewares.setFlash);
+
+app.use(logger(loggerConfig.mode, loggerConfig.options));
 
 app.use('/', require('./routes'));
 
