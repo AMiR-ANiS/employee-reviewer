@@ -1,0 +1,55 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="<%= assetPath('css/feedbacks.css') %>"
+/>
+
+<div id="review-feedback-container">
+  <div id="review-info">
+    <h3>View feedbacks for the review:</h3>
+    <textarea rows="5" disabled><%= review.text %></textarea>
+    <div>
+      Rating: <% for(let j = 0; j < review.stars; j++){ %>
+      <span class="icon">★</span> <% } %>
+    </div>
+    <br />
+    of: <em><%= employee.name %> (<%= employee.email %>)</em>
+    <br />
+  </div>
+
+  <div id="sort-by">
+    <form action="/admin/view-feedbacks/<%= review.id %>" method="get">
+      <label for="sort-order">Sort by: </label>
+      <select id="sort-order" name="sort">
+        <% if(sortBy === 'date') {%>
+        <option value="date" selected>oldest first</option>
+        <option value="-date">newest first</option>
+        <% } else { %>
+        <option value="date">oldest first</option>
+        <option value="-date" selected>newest first</option>
+        <% } %>
+      </select>
+      <input type="submit" value="sort" />
+    </form>
+  </div>
+  <div id="feedback-table">
+    <table>
+      <caption>
+        Feedback List
+      </caption>
+      <thead>
+        <tr>
+          <th>Sl. No.</th>
+          <th>Feedback</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < feedbacks.length; i++) { %> <%-
+        include('_feedback', {feedback: feedbacks[i], employee:
+        feedbacks[i].employee, n: i+1}) -%> <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const Feedback = require('../models/feedback');
+const Review = require('../models/review');
 
 module.exports.signUp = (req, res) => {
   if (req.isAuthenticated()) {
@@ -107,6 +109,48 @@ module.exports.update = async (req, res) => {
     let user = await User.findById(req.user.id);
 
     if (req.body.delete === 'true') {
+      user.reviewsToFeedback.forEach(async (id) => {
+        await Review.findByIdAndUpdate(id, {
+          $pull: {
+            employeesAssigned: user.id
+          }
+        });
+      });
+
+      let review = await Review.findOne({
+        employee: user.id
+      });
+
+      if (review) {
+        review.employeesAssigned.forEach(async (id) => {
+          await User.findByIdAndUpdate(id, {
+            $pull: {
+              reviewsToFeedback: review.id
+            }
+          });
+        });
+
+        await Feedback.deleteMany({
+          review: review.id
+        });
+
+        await review.remove();
+      }
+
+      let feedbacks = await Feedback.find({
+        employee: user.id
+      });
+
+      feedbacks.forEach(async (feedback) => {
+        await Review.findByIdAndUpdate(feedback.review, {
+          $pull: {
+            feedbacks: feedback.id
+          }
+        });
+
+        await feedback.remove();
+      });
+
       await user.remove();
       req.flash('success', 'account deleted successfully!');
       return res.redirect('/');

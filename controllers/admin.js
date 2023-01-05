@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Review = require('../models/review');
+const Feedback = require('../models/feedback');
 
 module.exports.addEmployeePage = (req, res) => {
   return res.render('add_employee', {
@@ -145,17 +146,67 @@ module.exports.updateEmployee = async (req, res) => {
       }
 
       let emptype = user.type;
+      let reviewed = user.reviewed;
       if (req.body.admin === 'true') {
         emptype = 'admin';
+        reviewed = false;
+
+        let reviewsToFeedback = user.reviewsToFeedback.map((id) => id);
+
+        reviewsToFeedback.forEach(async (id) => {
+          user.reviewsToFeedback.pull(id);
+
+          await Review.findByIdAndUpdate(id, {
+            $pull: {
+              employeesAssigned: user.id
+            }
+          });
+        });
+
+        let review = await Review.findOne({
+          employee: user.id
+        });
+
+        if (review) {
+          review.employeesAssigned.forEach(async (id) => {
+            await User.findByIdAndUpdate(id, {
+              $pull: {
+                reviewsToFeedback: review.id
+              }
+            });
+          });
+
+          await Feedback.deleteMany({
+            review: review.id
+          });
+
+          await review.remove();
+        }
+
+        let feedbacks = await Feedback.find({
+          employee: user.id
+        });
+
+        feedbacks.forEach(async (feedback) => {
+          await Review.findByIdAndUpdate(feedback.review, {
+            $pull: {
+              feedbacks: feedback.id
+            }
+          });
+
+          await feedback.remove();
+        });
       }
 
       user.name = req.body.name;
       user.type = emptype;
+      user.reviewed = reviewed;
       if (passwordChanged) {
         user.password = req.body.password;
       }
 
       await user.save();
+
       req.flash('success', 'employee updated successfully!');
       return res.redirect('/admin/update-employee-list?sort=name');
     } else {
@@ -194,11 +245,47 @@ module.exports.removeEmployee = async (req, res) => {
 
     let user = await User.findById(req.params.id);
     if (user) {
-      if (user.reviewed) {
-        await Review.deleteOne({
-          employee: user.id
+      user.reviewsToFeedback.forEach(async (id) => {
+        await Review.findByIdAndUpdate(id, {
+          $pull: {
+            employeesAssigned: user.id
+          }
         });
+      });
+
+      let review = await Review.findOne({
+        employee: user.id
+      });
+
+      if (review) {
+        review.employeesAssigned.forEach(async (id) => {
+          await User.findByIdAndUpdate(id, {
+            $pull: {
+              reviewsToFeedback: review.id
+            }
+          });
+        });
+
+        await Feedback.deleteMany({
+          review: review.id
+        });
+
+        await review.remove();
       }
+
+      let feedbacks = await Feedback.find({
+        employee: user.id
+      });
+
+      feedbacks.forEach(async (feedback) => {
+        await Review.findByIdAndUpdate(feedback.review, {
+          $pull: {
+            feedbacks: feedback.id
+          }
+        });
+
+        await feedback.remove();
+      });
 
       await user.remove();
       req.flash('success', 'employee removed successfully!');
@@ -501,6 +588,74 @@ module.exports.assignEmployees = async (req, res) => {
     }
   } catch (err) {
     req.flash('error', 'Error while assigning employees for feedback!');
+    return res.redirect('back');
+  }
+};
+
+module.exports.viewFeedbacks = async (req, res) => {
+  try {
+    let review;
+
+    if (req.query.sort === 'date') {
+      review = await Review.findById(req.params.id)
+        .populate({
+          path: 'employee',
+          select: {
+            password: 0
+          }
+        })
+        .populate({
+          path: 'feedbacks',
+          options: {
+            sort: {
+              updatedAt: 1
+            }
+          },
+          populate: {
+            path: 'employee',
+            select: {
+              password: 0
+            }
+          }
+        });
+    } else if (req.query.sort === '-date') {
+      review = await Review.findById(req.params.id)
+        .populate({
+          path: 'employee',
+          select: {
+            password: 0
+          }
+        })
+        .populate({
+          path: 'feedbacks',
+          options: {
+            sort: {
+              updatedAt: -1
+            }
+          },
+          populate: {
+            path: 'employee',
+            select: {
+              password: 0
+            }
+          }
+        });
+    }
+
+    if (review) {
+      return res.render('feedback_list', {
+        title: 'Employee Reviewer | View Feedbacks',
+        review,
+        employee: review.employee,
+        feedbacks: review.feedbacks,
+        sortBy: req.query.sort
+      });
+    } else {
+      req.flash('error', 'review not found!');
+      return res.redirect('back');
+    }
+  } catch (err) {
+    req.flash('error', 'Error while displaying review feedbacks!');
     return res.redirect('back');
   }
 };

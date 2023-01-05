@@ -1,9 +1,15 @@
 <tr>
   <td style="text-align: center"><%= n %></td>
   <td style="text-align: center">
-    <% for(let j = 0; j < review.stars; j++){ %> ★ <% } %>
+    <% for(let j = 0; j < review.stars; j++){ %> <span class="icon">★</span> <%
+    } %>
   </td>
   <td><%= review.text %></td>
   <td><%= employee.name %></td>
   <td><%= employee.email %></td>
+  <td style="text-align: center">
+    <a href="/admin/view-feedbacks/<%= review.id %>?sort=-date">
+      <i class="fa-regular fa-eye"></i>
+    </a>
+  </td>
 </tr>

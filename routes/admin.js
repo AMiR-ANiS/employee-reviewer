@@ -111,4 +111,10 @@ router.post(
   adminController.assignEmployees
 );
 
+router.get(
+  '/view-feedbacks/:id',
+  [middlewares.checkUserAuthentication, middlewares.checkIfUserIsAdmin],
+  adminController.viewFeedbacks
+);
+
 module.exports = router;

@@ -5,6 +5,17 @@
 />
 
 <div id="employee-list-container">
+  <div id="review-info">
+    <h3>Assign employees for the review:</h3>
+    <textarea rows="5" disabled><%= review.text %></textarea>
+    <div>
+      Rating: <% for(let j = 0; j < review.stars; j++){ %>
+      <span class="icon">★</span> <% } %>
+    </div>
+    <br />
+    of: <em><%= employee.name %> (<%= employee.email %>)</em>
+    <br />
+  </div>
   <div id="sort-by">
     <form action="/admin/assign-employee-page" method="get">
       <label for="sort-order">Sort by: </label>
@@ -30,7 +41,10 @@
     <div id="employee-table">
       <table>
         <caption>
-          <em>*Select the employees to assign for feedback</em>
+          <em
+            >*Select the employees to assign for feedback<br />
+            *Deselect to remove employees assigned.</em
+          >
         </caption>
         <thead>
           <tr>

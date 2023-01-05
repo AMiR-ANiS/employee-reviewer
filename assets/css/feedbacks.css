@@ -1,0 +1,91 @@
+#review-feedback-container {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: auto;
+}
+
+#review-feedback-container #review-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#review-feedback-container #review-info h3 {
+  margin: 0;
+}
+
+#review-feedback-container #review-info textarea {
+  padding: 5px;
+  border: 1px dotted black;
+  box-sizing: border-box;
+  width: 300px;
+}
+
+#review-feedback-container #review-info .icon {
+  color: #003cff;
+}
+
+#review-feedback-container #sort-by {
+  text-align: right;
+  margin-right: 10px;
+}
+
+#review-feedback-container #sort-by select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed black;
+  background-color: #f0f0f0;
+}
+
+#review-feedback-container #sort-by input[type='submit'] {
+  background-color: #deffce;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: 1px solid #3aff3a;
+  cursor: pointer;
+}
+
+#review-feedback-container #sort-by input[type='submit']:hover {
+  background-color: #87ff87;
+}
+
+#review-feedback-container #feedback-table {
+  padding: 10px;
+  overflow: auto;
+}
+
+#review-feedback-container #feedback-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#review-feedback-container #feedback-table th,
+#review-feedback-container #feedback-table td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+#review-feedback-container #feedback-table tr:nth-child(2n) {
+  background-color: #e7e7e7;
+}
+
+#review-feedback-container #feedback-table tr:hover {
+  background-color: #7fe1ff;
+}
+
+#review-feedback-container #feedback-table a {
+  text-decoration: none;
+}
+
+#review-feedback-container #feedback-table a:link {
+  color: blue;
+}
+
+#review-feedback-container #feedback-table a:visited {
+  color: blue;
+}
+
+#review-feedback-container #feedback-table a:hover {
+  color: red;
+}
