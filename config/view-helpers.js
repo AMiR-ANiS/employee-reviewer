@@ -1,3 +1,5 @@
+// view helper function to decide the path of the assets based on whether the app is in production mode or development mode
+
 const fs = require('fs');
 const path = require('path');
 

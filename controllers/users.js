@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Feedback = require('../models/feedback');
 const Review = require('../models/review');
 
+// controller function for viewing register user page
 module.exports.signUp = (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect('/');
@@ -12,6 +13,7 @@ module.exports.signUp = (req, res) => {
   }
 };
 
+// controller function for viewing sign in user page
 module.exports.signIn = (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect('/');
@@ -22,6 +24,7 @@ module.exports.signIn = (req, res) => {
   }
 };
 
+// controller function for creating a user
 module.exports.createUser = async (req, res) => {
   try {
     if (req.body.name.length === 0) {
@@ -75,11 +78,13 @@ module.exports.createUser = async (req, res) => {
   }
 };
 
+// controller for generating create successful session message
 module.exports.createSession = (req, res) => {
   req.flash('success', 'Welcome!');
   return res.redirect('/');
 };
 
+// controller function for log out user
 module.exports.destroySession = (req, res, next) => {
   req.logout((err) => {
     if (err) {
@@ -90,6 +95,7 @@ module.exports.destroySession = (req, res, next) => {
   });
 };
 
+// controller function for displaying profile update page for logged in user
 module.exports.updatePage = async (req, res) => {
   try {
     let user = await User.findById(req.user.id).select({ password: 0 });
@@ -104,6 +110,7 @@ module.exports.updatePage = async (req, res) => {
   }
 };
 
+// controller function for updating own profile
 module.exports.update = async (req, res) => {
   try {
     let user = await User.findById(req.user.id);

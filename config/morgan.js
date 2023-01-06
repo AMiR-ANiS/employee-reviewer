@@ -1,3 +1,5 @@
+// morgan logger config file for generating production logs
+
 const fs = require('fs');
 const path = require('path');
 const rfs = require('rotating-file-stream');

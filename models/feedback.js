@@ -1,3 +1,5 @@
+// mongoose feedback model
+
 const mongoose = require('mongoose');
 
 const feedbackSchema = new mongoose.Schema(

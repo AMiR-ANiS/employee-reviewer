@@ -1,3 +1,5 @@
+// mongoose config file for connecting application to the mongo DB atlas cloud database
+
 const mongoose = require('mongoose');
 
 const db_user = encodeURIComponent(process.env.APP_DB_USER);
@@ -7,6 +9,7 @@ const uri = `mongodb+srv://${db_user}:${db_password}@cluster0.q2wqs6f.mongodb.ne
 
 mongoose.connect(uri);
 
+// get connection instance
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Error connecting to Database!'));

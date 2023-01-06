@@ -1,3 +1,5 @@
+// routes only employees can access
+
 const express = require('express');
 const router = express.Router();
 const middlewares = require('../config/middleware');

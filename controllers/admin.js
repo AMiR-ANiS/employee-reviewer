@@ -2,12 +2,14 @@ const User = require('../models/user');
 const Review = require('../models/review');
 const Feedback = require('../models/feedback');
 
+// controller function for rendering the add employee page
 module.exports.addEmployeePage = (req, res) => {
   return res.render('add_employee', {
     title: 'Employee Reviewer | Add Employee'
   });
 };
 
+// controller function for adding a user
 module.exports.addEmployee = async (req, res) => {
   try {
     if (req.body.name.length === 0) {
@@ -58,6 +60,7 @@ module.exports.addEmployee = async (req, res) => {
   }
 };
 
+// controller function for rendering update employee list
 module.exports.updateEmployeeList = async (req, res) => {
   try {
     let employees = await User.find({ _id: { $ne: req.user.id } })
@@ -75,6 +78,7 @@ module.exports.updateEmployeeList = async (req, res) => {
   }
 };
 
+// controller function for displaying list of employees page
 module.exports.employeeList = async (req, res) => {
   try {
     let employees = await User.find({ _id: { $ne: req.user.id } })
@@ -92,6 +96,7 @@ module.exports.employeeList = async (req, res) => {
   }
 };
 
+// controller function for displaying update page
 module.exports.updatePage = async (req, res) => {
   try {
     if (req.params.id === req.user.id) {
@@ -118,6 +123,7 @@ module.exports.updatePage = async (req, res) => {
   }
 };
 
+// controller function for updating an employee
 module.exports.updateEmployee = async (req, res) => {
   try {
     if (req.params.id === req.user.id) {
@@ -219,6 +225,7 @@ module.exports.updateEmployee = async (req, res) => {
   }
 };
 
+// controller function for displaying remove employees list
 module.exports.removeEmployeeList = async (req, res) => {
   try {
     let employees = await User.find({ _id: { $ne: req.user.id } })
@@ -236,6 +243,7 @@ module.exports.removeEmployeeList = async (req, res) => {
   }
 };
 
+// controller for removing an employee
 module.exports.removeEmployee = async (req, res) => {
   try {
     if (req.params.id === req.user.id) {
@@ -300,6 +308,7 @@ module.exports.removeEmployee = async (req, res) => {
   }
 };
 
+// controller for displaying add review for employee list
 module.exports.addReviewList = async (req, res) => {
   try {
     let employees = await User.find({
@@ -320,6 +329,7 @@ module.exports.addReviewList = async (req, res) => {
   }
 };
 
+// controller function for displaying page for adding a review for an employee
 module.exports.addReviewPage = async (req, res) => {
   try {
     let employee = await User.findById(req.params.id).select({ password: 0 });
@@ -343,6 +353,7 @@ module.exports.addReviewPage = async (req, res) => {
   }
 };
 
+// controller for adding a review for an employee
 module.exports.addReview = async (req, res) => {
   try {
     let employee = await User.findById(req.params.id);
@@ -382,6 +393,7 @@ module.exports.addReview = async (req, res) => {
   }
 };
 
+// controller function for viewing reviews
 module.exports.viewReviews = async (req, res) => {
   try {
     let reviews = await Review.find({})
@@ -404,6 +416,7 @@ module.exports.viewReviews = async (req, res) => {
   }
 };
 
+// controller function for displaying update reviews list
 module.exports.updateReviewList = async (req, res) => {
   try {
     let reviews = await Review.find({})
@@ -426,6 +439,7 @@ module.exports.updateReviewList = async (req, res) => {
   }
 };
 
+// controller function for displaying page for updating a review
 module.exports.updateReviewPage = async (req, res) => {
   try {
     let review = await Review.findById(req.params.id).populate({
@@ -451,6 +465,7 @@ module.exports.updateReviewPage = async (req, res) => {
   }
 };
 
+// controller function for updating a review of an employee
 module.exports.updateReview = async (req, res) => {
   try {
     let review = await Review.findById(req.params.id);
@@ -483,6 +498,7 @@ module.exports.updateReview = async (req, res) => {
   }
 };
 
+// controller function for displaying assign employees for reviews page
 module.exports.assignEmployeeList = async (req, res) => {
   try {
     let reviews = await Review.find({})
@@ -505,6 +521,7 @@ module.exports.assignEmployeeList = async (req, res) => {
   }
 };
 
+// controller function for displaying page for assigning employees to participate in an employee's performance review
 module.exports.assignEmployeePage = async (req, res) => {
   try {
     let review = await Review.findById(req.query.id).populate({
@@ -541,6 +558,7 @@ module.exports.assignEmployeePage = async (req, res) => {
   }
 };
 
+// controller function for assigning employees to give feedback for an employee's performance review
 module.exports.assignEmployees = async (req, res) => {
   try {
     let review = await Review.findById(req.params.id);
@@ -592,6 +610,7 @@ module.exports.assignEmployees = async (req, res) => {
   }
 };
 
+// controller function for rendering feedbacks for a review
 module.exports.viewFeedbacks = async (req, res) => {
   try {
     let review;

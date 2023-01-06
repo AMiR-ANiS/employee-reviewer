@@ -1,3 +1,4 @@
+// middleware for sending flash messages from request to response for views
 module.exports.setFlash = (req, res, next) => {
   res.locals.flash = {
     success: req.flash('success')[0],
@@ -7,6 +8,7 @@ module.exports.setFlash = (req, res, next) => {
   return next();
 };
 
+// middleware for checking sign in input by the user
 module.exports.checkSignInInput = (req, res, next) => {
   if (req.body.email.length === 0) {
     req.flash('error', 'Email cannot be empty!');
@@ -20,6 +22,7 @@ module.exports.checkSignInInput = (req, res, next) => {
   return next();
 };
 
+// middleware for checking if user is authenticated using passport js
 module.exports.checkUserAuthentication = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
@@ -29,6 +32,7 @@ module.exports.checkUserAuthentication = (req, res, next) => {
   }
 };
 
+// middleware for setting user in response.locals for views if user is authenticated
 module.exports.setUserAuthentication = (req, res, next) => {
   if (req.isAuthenticated()) {
     res.locals.user = req.user;
@@ -36,6 +40,7 @@ module.exports.setUserAuthentication = (req, res, next) => {
   return next();
 };
 
+// middleware for checking if user is admin
 module.exports.checkIfUserIsAdmin = (req, res, next) => {
   if (req.user.type === 'admin') {
     return next();
@@ -45,6 +50,7 @@ module.exports.checkIfUserIsAdmin = (req, res, next) => {
   }
 };
 
+// middleware for checking if user is employee
 module.exports.checkIfUserIsEmployee = (req, res, next) => {
   if (req.user.type === 'employee') {
     return next();

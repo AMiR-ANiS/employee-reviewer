@@ -2,6 +2,7 @@ const Review = require('../models/review');
 const Feedback = require('../models/feedback');
 const User = require('../models/user');
 
+// controller function for viewing list of reviews requiring feedback
 module.exports.viewReviews = async (req, res) => {
   try {
     let reviews = await Review.find({
@@ -31,6 +32,7 @@ module.exports.viewReviews = async (req, res) => {
   }
 };
 
+// controller function for displaying submit feedback page for a review
 module.exports.feedbackPage = async (req, res) => {
   try {
     let review = await Review.findById(req.params.id).populate({
@@ -56,6 +58,7 @@ module.exports.feedbackPage = async (req, res) => {
   }
 };
 
+// controller function for submitting a feedback
 module.exports.submitFeedback = async (req, res) => {
   try {
     let review = await Review.findById(req.params.id);

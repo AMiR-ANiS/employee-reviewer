@@ -1,3 +1,5 @@
+// passport local config file for authenticating user using passport js local strategy
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
@@ -27,10 +29,12 @@ passport.use(
   )
 );
 
+// passport serialization to decide which data of user is to be kept in the cookies
 passport.serializeUser((user, done) => {
   return done(null, user.id);
 });
 
+// deserialize the user from the cookie
 passport.deserializeUser(async (id, done) => {
   try {
     let user = await User.findById(id);
