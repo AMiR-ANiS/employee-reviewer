@@ -141,7 +141,7 @@ module.exports.update = async (req, res) => {
           review: review.id
         });
 
-        await review.remove();
+        await Review.findByIdAndDelete(review.id);
       }
 
       let feedbacks = await Feedback.find({
@@ -155,10 +155,10 @@ module.exports.update = async (req, res) => {
           }
         });
 
-        await feedback.remove();
+        await Feedback.findByIdAndDelete(feedback.id);
       });
 
-      await user.remove();
+      await User.findByIdAndDelete(user.id);
       req.flash('success', 'account deleted successfully!');
       return res.redirect('/');
     }
@@ -178,13 +178,17 @@ module.exports.update = async (req, res) => {
       return res.redirect('back');
     }
 
-    user.name = req.body.name;
-
     if (passwordChanged) {
-      user.password = req.body.password;
+      await User.findByIdAndUpdate(user.id, {
+        name: req.body.name,
+        password: req.body.password
+      });
+    } else {
+      await User.findByIdAndUpdate(user.id, {
+        name: req.body.name
+      });
     }
 
-    await user.save();
     req.flash('success', 'Profile updated successfully!');
     return res.redirect('/');
   } catch (err) {

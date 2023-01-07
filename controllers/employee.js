@@ -74,28 +74,36 @@ module.exports.submitFeedback = async (req, res) => {
       }
 
       let feedback = await Feedback.findOne({
-        employee: req.user.id,
+        employee: employee.id,
         review: review.id
       });
 
       if (feedback) {
-        feedback.text = req.body.feedback_text;
-        await feedback.save();
+        await Feedback.findByIdAndUpdate(feedback.id, {
+          text: req.body.feedback_text
+        });
       } else {
-        let feedback = await Feedback.create({
+        feedback = await Feedback.create({
           text: req.body.feedback_text,
-          employee: req.user.id,
+          employee: employee.id,
           review: review.id
         });
 
-        review.feedbacks.push(feedback.id);
+        await Review.findByIdAndUpdate(review.id, {
+          $push: {
+            feedbacks: feedback.id
+          },
+          $pull: {
+            employeesAssigned: employee.id
+          }
+        });
       }
 
-      employee.reviewsToFeedback.pull(review.id);
-      review.employeesAssigned.pull(employee.id);
-
-      await employee.save();
-      await review.save();
+      await User.findByIdAndUpdate(employee.id, {
+        $pull: {
+          reviewsToFeedback: review.id
+        }
+      });
 
       req.flash('success', 'feedback submitted successfully!');
       return res.redirect('/employee/view-reviews?sort=-stars');

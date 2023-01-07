@@ -157,10 +157,12 @@ module.exports.updateEmployee = async (req, res) => {
         emptype = 'admin';
         reviewed = false;
 
-        let reviewsToFeedback = user.reviewsToFeedback.map((id) => id);
-
-        reviewsToFeedback.forEach(async (id) => {
-          user.reviewsToFeedback.pull(id);
+        user.reviewsToFeedback.forEach(async (id) => {
+          await User.findByIdAndUpdate(user.id, {
+            $pull: {
+              reviewsToFeedback: id
+            }
+          });
 
           await Review.findByIdAndUpdate(id, {
             $pull: {
@@ -186,7 +188,7 @@ module.exports.updateEmployee = async (req, res) => {
             review: review.id
           });
 
-          await review.remove();
+          await Review.findByIdAndDelete(review.id);
         }
 
         let feedbacks = await Feedback.find({
@@ -200,18 +202,24 @@ module.exports.updateEmployee = async (req, res) => {
             }
           });
 
-          await feedback.remove();
+          await Feedback.findByIdAndDelete(feedback.id);
         });
       }
 
-      user.name = req.body.name;
-      user.type = emptype;
-      user.reviewed = reviewed;
       if (passwordChanged) {
-        user.password = req.body.password;
+        await User.findByIdAndUpdate(user.id, {
+          name: req.body.name,
+          type: emptype,
+          reviewed: reviewed,
+          password: req.body.password
+        });
+      } else {
+        await User.findByIdAndUpdate(user.id, {
+          name: req.body.name,
+          type: emptype,
+          reviewed: reviewed
+        });
       }
-
-      await user.save();
 
       req.flash('success', 'employee updated successfully!');
       return res.redirect('/admin/update-employee-list?sort=name');
@@ -278,7 +286,7 @@ module.exports.removeEmployee = async (req, res) => {
           review: review.id
         });
 
-        await review.remove();
+        await Review.findByIdAndDelete(review.id);
       }
 
       let feedbacks = await Feedback.find({
@@ -292,10 +300,10 @@ module.exports.removeEmployee = async (req, res) => {
           }
         });
 
-        await feedback.remove();
+        await Feedback.findByIdAndDelete(feedback.id);
       });
 
-      await user.remove();
+      await User.findByIdAndDelete(user.id);
       req.flash('success', 'employee removed successfully!');
       return res.redirect('/admin/remove-employee-list?sort=name');
     } else {
@@ -379,8 +387,10 @@ module.exports.addReview = async (req, res) => {
         employee: req.params.id
       });
 
-      employee.reviewed = true;
-      await employee.save();
+      await User.findByIdAndUpdate(employee.id, {
+        reviewed: true
+      });
+
       req.flash('success', 'employee reviewed successfully!');
       return res.redirect('/admin/add-review-list?sort=name');
     } else {
@@ -481,10 +491,10 @@ module.exports.updateReview = async (req, res) => {
         return res.redirect('back');
       }
 
-      review.text = req.body.review_text;
-      review.stars = req.body.stars;
-
-      await review.save();
+      await Review.findByIdAndUpdate(review.id, {
+        text: req.body.review_text,
+        stars: req.body.stars
+      });
 
       req.flash('success', 'review updated successfully!');
       return res.redirect('/admin/update-review-list?sort=-stars');
@@ -574,29 +584,33 @@ module.exports.assignEmployees = async (req, res) => {
         }
       }
 
-      let existingAssignedEmployeeIDs = review.employeesAssigned.map(
-        (id) => id
-      );
-
-      existingAssignedEmployeeIDs.forEach(async (id) => {
-        review.employeesAssigned.pull(id);
-        let employee = await User.findById(id);
-        employee.reviewsToFeedback.pull(review._id);
-
-        await employee.save();
+      review.employeesAssigned.forEach(async (id) => {
+        await Review.findByIdAndUpdate(review.id, {
+          $pull: {
+            employeesAssigned: id
+          }
+        });
+        await User.findByIdAndUpdate(id, {
+          $pull: {
+            reviewsToFeedback: review.id
+          }
+        });
       });
 
       for (let i = 0; i < req.body.length; i++) {
         if (req.body[i]) {
-          let employee = await User.findById(req.body[i]);
-          review.employeesAssigned.push(req.body[i]);
-          employee.reviewsToFeedback.push(review._id);
-
-          await employee.save();
+          await Review.findByIdAndUpdate(review.id, {
+            $push: {
+              employeesAssigned: req.body[i]
+            }
+          });
+          await User.findByIdAndUpdate(req.body[i], {
+            $push: {
+              reviewsToFeedback: review.id
+            }
+          });
         }
       }
-
-      await review.save();
 
       req.flash('success', 'employees assigned successfully!');
       return res.redirect('/admin/assign-employee-list?sort=-stars');
